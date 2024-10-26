@@ -20,6 +20,19 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+// Redireciona a URL raiz para o Swagger
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/")
+    {
+        context.Response.Redirect("/swagger/index.html");
+    }
+    else
+    {
+        await next();
+    }
+});
+
 app.UseAuthorization();
 
 app.MapControllers();
